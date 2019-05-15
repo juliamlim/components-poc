@@ -1,25 +1,24 @@
 export class Base extends HTMLElement {
-    constructor(props) {
-      super();
+  constructor(props) {
+    super();
+    this.init(this.parseAttributes);
+    this.innerHTML = this.render();
+  }
 
-      this.init(this.parsedAttributes);
-      this.innerHTML = this.render();
-    }
+  attributeChangedCallback(attribute, oldValue, newValue) {
+    this.state[attribute] = newValue;
+    this.updated(attribute, oldValue, newValue);
+  }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-      this.state[name] = newValue;
-      this.updated(name, oldValue, newValue);
-    }
+  init() { }
 
-    init() { }
+  updated() { }
 
-    updated() { }
-
-    get parsedAttributes() {
-      return Object.keys(this.attributes).reduce((obj, index) => {
-        const { name, value } = this.attributes.item(index);
-        obj[name] = value;
-        return obj;
-      }, {});
-    }
+  get parseAttributes() {
+    return Object.keys(this.attributes).reduce((obj, index) => {
+      const { name, value } = this.attributes.item(index);
+      obj[name] = value;
+      return obj;
+    }, {});
+  }
 }
