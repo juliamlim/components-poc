@@ -1,10 +1,7 @@
 export class Base extends HTMLElement {
     constructor(props) {
       super();
-      this.state = {};
-    }
 
-    connectedCallback() {
       this.init(this.parsedAttributes);
       this.innerHTML = this.render();
     }

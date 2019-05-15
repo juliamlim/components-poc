@@ -6,7 +6,7 @@ class ProductTile extends Base {
     }
 
     init(attributes) {
-        this.state = this.parseState(attributes);
+      this.state = this.parseState(attributes);
     }
 
     render() {

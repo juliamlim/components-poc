@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "serve": "webpack && node server.js",
-    "watch": "nodemon --exec 'npm start'"
+    "watch": "nodemon --exec 'npm run serve'"
   },
   "keywords": [],
   "author": "",
