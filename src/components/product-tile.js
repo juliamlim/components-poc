@@ -1,9 +1,8 @@
 import { Base } from './base';
-import { parse } from 'url';
 
 class ProductTile extends Base {
     static get observedAttributes() {
-        return ['name', 'price'];
+      return ['name', 'price'];
     }
 
     init(attributes) {
@@ -11,18 +10,22 @@ class ProductTile extends Base {
     }
 
     render() {
-        return `
-            <div>
-                <h1 class="name">${this.state.name}</h1>
-                <p>${this.state.price}</p>
-            </div>
-        `;
+      return `
+        <h1 class="name">${this.state.name}</h1>
+        <p>${this.state.price}</p>
+      `;
     }
 
-    updated() {
-        this.state = this.parseState(this.state);
-        this.querySelector('h1').textContent = this.state.name;
-        this.querySelector('p').textContent = this.state.price;
+    updated(name, oldValue, newValue) {
+      this.state = this.parseState(this.state);
+      switch (name) {
+        case 'name':
+          this.querySelector('h1').textContent = this.state.name;
+          break;
+        case 'price':
+          this.querySelector('p').textContent = this.state.price;
+          break;
+      }
     }
 
     parseState(state) {

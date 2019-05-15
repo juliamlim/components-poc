@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Storefront Themes</title>
+    <link rel="stylesheet" href="css/bold.css">
 </head>
 <body>
     <h1>Components</h1>
     <product-tile name="Losenges" price="9.99"></product-tile>
+
+    <product-tile name="Mugs" price="20.99"></product-tile>
 
     <button onclick="changeProduct()">See Peanuts</button>
 
     <script src="components.js" type="text/javascript"></script>
     <script>
         function changeProduct() {
-            const product = document.querySelector('product-tile');
-            product.setAttribute('name', 'Peanuts');
-            product.setAttribute('price', '3.20');
+            const products = document.querySelectorAll('product-tile');
+
+            [...products].forEach(product => {
+              console.log(product);
+              product.setAttribute('name', 'Peanuts');
+              product.setAttribute('price', '3.20');
+            });
             console.log('changed');
         }
     </script>
