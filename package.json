@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "webpack && node server.js",
-    "serve": "nodemon --exec 'npm start'"
+    "serve": "webpack && node server.js",
+    "watch": "nodemon --exec 'npm start'"
   },
   "keywords": [],
   "author": "",
