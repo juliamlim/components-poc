@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Web Components POC</title>
-    <link rel="stylesheet" href="css/bold.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Web Components POC</title>
+  <link rel="stylesheet" href="css/contemporary.css">
 </head>
 <body>
-    <h1>Components</h1>
-    <product-tile name="Losenges" price="9.99"></product-tile>
+  <h1>Component Store</h1>
 
-    <product-tile name="Mugs" price="20.99"></product-tile>
+  <section id="featured">
+    <h2>Featured Products</h2>
+    <product-tile name="Mint Losenge" price="9.99" sale-price="4.99"></product-tile>
+    <product-tile name="Pug Mug" price="20.99">
+      <div slot="buttons">
+        <button class="product-atc" onclick="clientAtc()">Quick Look</button>
+        <button class="product-atc">Add to Cart</button>
+      </div>
+    </product-tile>
+  </section>
 
-    <product-tile></product-tile>
 
-    <button onclick="changeProduct()">See Peanuts</button>
+  <section id="other">
+    <h2>Other Products</h2>
+    <div class="shelf">
+      <%# <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
+      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile> %>
+    </div>
+  </section>
 
-    <script src="components.js" type="text/javascript"></script>
-    <script>
-        function changeProduct() {
-            const products = document.querySelectorAll('product-tile');
-            [...products].forEach(product => {
-              product.setAttribute('name', 'Peanuts');
-              product.setAttribute('price', '3.20');
-            });
-        }
-    </script>
+  <button onclick="changeProduct()">See Peanuts</button>
+
+  <script src="components.js" type="text/javascript"></script>
+  <script>
+      function changeProduct() {
+          const products = document.querySelectorAll('product-tile');
+          [...products].forEach(product => {
+            product.setAttribute('name', 'Peanuts');
+            product.setAttribute('price', '3.20');
+          });
+
+      }
+
+      function clientAtc() {
+        alert('ADDED TO CART');
+      }
+  </script>
 </body>
 </html>
