@@ -7,7 +7,6 @@ const env = require('../env');
 
 router.route('/')
     .get((req, res) => {
-
       axios.post(env.search.endpoint, env.search.params)
         .then( response => {
           const { records } = response.data;

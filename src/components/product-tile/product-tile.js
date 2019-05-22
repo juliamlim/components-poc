@@ -38,9 +38,9 @@ class ProductTile extends Base {
   connectedCallback() {
     this.addToCart = this.addToCart.bind(this);
     this.element.querySelector('.product-atc').addEventListener('click', this.addToCart);
-    super.addEventListener('change_product_thumbnail', (e) => {
-      console.log(e);
-      this.setAttribute('image', e.detail.url());
+
+    this.addEventListener('awesome', e => {
+      this.element.querySelector('.product-img img').setAttribute('src', e.detail.image());
     });
   }
 

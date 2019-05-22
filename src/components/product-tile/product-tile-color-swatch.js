@@ -16,9 +16,14 @@ class ProductTileColorSwatch extends Base {
   }
 
   connectedCallback() {
+    const eventAwesome = new CustomEvent('awesome', {
+      bubbles: true,
+      composed: true,
+      detail: { image: () => this.state.product }
+    });
+
     this.element.addEventListener('mouseover', e => {
-      const parent = this.closest('.product-tile');
-      console.log(this, parent);
+      this.dispatchEvent(eventAwesome);
     });
   }
 
