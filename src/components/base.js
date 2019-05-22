@@ -3,11 +3,22 @@ export class Base extends HTMLElement {
     super();
     this.init(this.parseAttributes);
 
-    // /** Light DOM */
-    // this.innerHTML = this.render();
-
     /** Shadow DOM */
+
+    // Get theme from environment
+    const { THEME = 'contemporary' } = process.env;
+    const style = document.createElement('style');
+    if (THEME) {
+      style.textContent = `@import url('${__dirname}css/${THEME}.css')`;
+    }
+
+    // Create DOM tree from string
     const template = document.createRange().createContextualFragment(this.render());
+
+    // Add style
+    template.prepend(style);
+
+    // Attach template to shadow
     this.attachShadow({mode: 'open'}).appendChild(template.cloneNode(true));
 
     // Set the root element
@@ -23,27 +34,12 @@ export class Base extends HTMLElement {
 
   updated() { }
 
-  get window() {
-    return window;
-  }
-
   get parseAttributes() {
     return Object.keys(this.attributes).reduce((obj, index) => {
       const { name, value } = this.attributes.item(index);
       obj[this.toCamel(name)] = value;
       return obj;
     }, {});
-  }
-
-  setListener(target, event, newValue, oldValue = () => {}) {
-    console.log(target, event, newValue, oldValue);
-
-    if (newValue) {
-      target.removeEventListener(event, oldValue);
-      target.addEventListener(event, newValue);
-    } else {
-      target.addEventListener(event, oldValue);
-    }
   }
 
   toCamel(str = '') {

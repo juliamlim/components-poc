@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Web Components POC</title>
+  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/contemporary.css">
 </head>
 <body>
@@ -15,8 +16,8 @@
     <product-tile name="Mint Losenge" price="9.99" sale-price="4.99"></product-tile>
     <product-tile name="Pug Mug" price="20.99">
       <div slot="buttons">
-        <button class="product-atc" onclick="clientAtc()">Quick Look</button>
-        <button class="product-atc">Add to Cart</button>
+        <button class="product-atc">Quick Look</button>
+        <button class="product-atc" onclick="clientAtc()">Add to Cart</button>
       </div>
     </product-tile>
   </section>
@@ -25,15 +26,15 @@
   <section id="other">
     <h2>Other Products</h2>
     <div class="shelf">
-      <%# <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile>
-      <product-tile name="Losenges" price="9.99" sale-price="4.99"></product-tile> %>
+      <% products.forEach((product) => { %>
+        <product-tile
+          name="<%- product.name %>"
+          price="<%- product.price %>"
+          image="<%- product.image %>"
+          <% if (product.salePrice) { %> sale-price="<%- product.salePrice %>" <% } %>
+          <% if (product.colors) { %> colors='<%- JSON.stringify(product.colors) %>' <% } %>
+        ></product-tile>
+      <% }) %>
     </div>
   </section>
 

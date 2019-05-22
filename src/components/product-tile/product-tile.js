@@ -1,8 +1,10 @@
-import { Base } from './base';
+import { Base } from '../base';
+
+import './product-tile-color-variants';
 
 class ProductTile extends Base {
   static get observedAttributes() {
-    return ['name', 'price', 'add-to-cart'];
+    return ['name', 'price', 'image', 'variants', 'sale-price'];
   }
 
   init(attributes) {
@@ -10,29 +12,15 @@ class ProductTile extends Base {
   }
 
   render() {
-    const theme = 'contemporary';
     return `
-      <style>
-        @import url('/css/${theme}.css');
-      </style>
       <article class="product-tile">
-        <div class="product-img"><img src="img/product.svg"/></div>
+        <div class="product-img"><img src="${this.state.image || 'img/product.svg'}"/></div>
+        ${ this.state.colors ? `<product-tile-color-variants colors='${this.state.colors}'></product-tile-color-variants>` : '' }
         <header class="product-name"><h5>${this.state.name}</h5></header>
         <p>
           <span class="product-price ${this.state.salePrice ? 'sale' : '' }">${this.state.price}</span>
           ${ this.state.salePrice ? `<span class="product-price-sale">${this.state.salePrice}</span>` : '' }
         </p>
-        ${
-          this.state.colors ?
-            `<ul>
-              ${
-                this.state.color.map((color) => {
-                  `<li aria-label="${color.name}" style="background-color: ${color.hex}"></li>`
-                }).join('')
-              }
-            </ul>` :
-            ''
-        }
         <!-- Need to define children in the constructor so we can create an event listener for below -->
         <slot name="buttons">
           <button class="product-atc">Add to Basket</button>
@@ -41,9 +29,19 @@ class ProductTile extends Base {
     `;
   }
 
+  get listeners() {
+    return {
+      'change_product_image': (value) => { console.log(value); this.element.querySelector('.product-img img').setAttribute('src', value.detail.url()) },
+    };
+  }
+
   connectedCallback() {
     this.addToCart = this.addToCart.bind(this);
-    console.log('created');
+    this.element.querySelector('.product-atc').addEventListener('click', this.addToCart);
+    super.addEventListener('change_product_thumbnail', (e) => {
+      console.log(e);
+      this.setAttribute('image', e.detail.url());
+    });
   }
 
   attributeChangedCallback(attribute, oldValue, newValue) {
@@ -58,9 +56,6 @@ class ProductTile extends Base {
       case 'price':
         this.element.querySelector('.product-price').textContent = this.state.price;
         break;
-      case 'addToCart':
-        this.setListener(this.element.querySelector('.product-atc'), 'click', oldValue ? oldValue : this.addToCart.bind(this), newValue);
-        break;
     }
   }
 
@@ -68,8 +63,8 @@ class ProductTile extends Base {
     return {
       ...state,
       name: (state.name || 'Coal').toUpperCase(),
-      price: state.price ? `$${state.price}` : 'FREE',
-      salePrice: state.salePrice ? `$${state.salePrice}` : '',
+      price: state.price ? state.price : 'FREE',
+      salePrice: state.salePrice ? state.salePrice : '',
     };
   }
 

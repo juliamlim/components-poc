@@ -4,12 +4,14 @@
   "description": "",
   "scripts": {
     "serve": "webpack && node server.js",
-    "watch": "nodemon --exec 'npm run serve'"
+    "watch": "nodemon --exec 'npm run serve'",
+    "dev": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4"
   },
@@ -21,6 +23,7 @@
     "nodemon": "^1.19.0",
     "sass-loader": "^7.1.0",
     "webpack": "^4.31.0",
-    "webpack-cli": "^3.3.2"
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
   }
 }

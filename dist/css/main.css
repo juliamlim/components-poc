@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:300&display=swap');
+
+* {
+  font-family: 'Muli', Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+body {
+  background-color: #eee;
+}
+
+#featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "title title" "a b";
+  grid-gap: 15px;
+}
+
+#other {
+  width: 100%;
+}
+
+#other h2,
+#featured h2 {
+  grid-area: title;
+  text-align: center;
+}
+
+#other .shelf {
+  display: flex;
+  max-width: 100%;
+  overflow-y: scroll;
+}
+
+#other .shelf > product-tile {
+  min-width: 200px;
+  align-self: stretch;
+  margin: 15px 7.5px;
+}
