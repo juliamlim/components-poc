@@ -35,8 +35,9 @@
   border-radius: var(--product-atc-border-radius, 0); }
 
 .product-tile-color-variants {
+  padding: 0;
   list-style: none;
-  padding: 0; }
+  text-align: center; }
 
 .product-tile-color-swatch {
   width: 17px;
@@ -44,3 +45,7 @@
   display: inline-block;
   border: .5px solid #eee;
   border-radius: 3px; }
+  .product-tile-color-swatch.see {
+    font-size: 0.6em;
+    line-height: 17px;
+    text-align: center; }

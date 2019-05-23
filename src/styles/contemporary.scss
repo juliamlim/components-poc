@@ -45,8 +45,9 @@
 }
 
 .product-tile-color-variants {
-  list-style: none;
   padding: 0;
+  list-style: none;
+  text-align: center;
 }
 
 .product-tile-color-swatch {
@@ -55,4 +56,10 @@
   display: inline-block;
   border: .5px solid #eee;
   border-radius: 3px;
+
+  &.see {
+    font-size: 0.6em;
+    line-height: 17px;
+    text-align: center;
+  }
 }

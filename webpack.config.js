@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'production',
   entry: {
-      components: ['./src/components/index.js', './src/styles/contemporary.scss']
+      components: ['./src/components/index.js', './src/styles/contemporary.scss', './src/styles/minimal.scss']
   },
   output: {
       path: __dirname + '/dist',

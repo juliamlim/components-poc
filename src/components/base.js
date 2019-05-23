@@ -6,8 +6,9 @@ export class Base extends HTMLElement {
     /** Shadow DOM */
 
     // Get theme from environment
-    const { THEME = 'contemporary' } = process.env;
+    const { THEME = 'minimal' } = process.env;
     const style = document.createElement('style');
+
     if (THEME) {
       style.textContent = `@import url('${__dirname}css/${THEME}.css')`;
     }

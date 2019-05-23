@@ -29,17 +29,11 @@ class ProductTile extends Base {
     `;
   }
 
-  get listeners() {
-    return {
-      'change_product_image': (value) => { console.log(value); this.element.querySelector('.product-img img').setAttribute('src', value.detail.url()) },
-    };
-  }
-
   connectedCallback() {
     this.addToCart = this.addToCart.bind(this);
     this.element.querySelector('.product-atc').addEventListener('click', this.addToCart);
 
-    this.addEventListener('awesome', e => {
+    this.addEventListener('change_product_image', e => {
       this.element.querySelector('.product-img img').setAttribute('src', e.detail.image());
     });
   }

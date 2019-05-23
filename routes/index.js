@@ -7,34 +7,55 @@ const env = require('../env');
 
 router.route('/')
     .get((req, res) => {
-      axios.post(env.search.endpoint, env.search.params)
-        .then( response => {
-          const { records } = response.data;
 
-          let a = 1;
-          const products = records.map( item => {
+      function getNew() {
+        return axios.post(env.search.endpoint, env.search.params.new)
+      }
 
-            const { ProdDetail_Image, nonvisualVariant } = item.allMeta.visualVariant[0];
+      function getWomens() {
+        return axios.post(env.search.endpoint, env.search.params.womens)
+      }
 
-            const { gbi_price_display } = nonvisualVariant[0];
+      function getMens() {
+        return axios.post(env.search.endpoint, env.search.params.mens)
+      }
 
-            const colors = item.allMeta.visualVariant.map(v => {
-              const { Color_Name, Hex_Code } = v;
+      function getAccessories() {
+        return axios.post(env.search.endpoint, env.search.params.accessories)
+      }
 
-              return { name: Color_Name, hex: `#${Hex_Code}`, product: `https://${env.customer.origin}${v.ProdDetail_Image}` };
-            });
+      function parseResponse(response) {
+        const { records = [] } = response.data;
 
-            return product = {
-              name: item.allMeta.title,
-              image: `https://${env.customer.origin}${ProdDetail_Image}`,
-              price: gbi_price_display,
-              colors,
-            };
+        return records.map( item => {
+          const { ProdDetail_Image, nonvisualVariant } = item.allMeta.visualVariant[0];
+
+          const colors = item.allMeta.visualVariant.map(v => {
+            const { Color_Name, Hex_Code } = v;
+            return { name: Color_Name, hex: `#${Hex_Code}`, product: `https://${env.customer.origin}${v.ProdDetail_Image}` };
           });
 
-          res.render('pages/home', { products });
-        });
+          return product = {
+            name: item.allMeta.title,
+            image: `https://${env.customer.origin}${ProdDetail_Image}`,
+            price: nonvisualVariant[0].gbi_price_display || 'FREE',
+            colors,
+          };
+        })
+      }
 
+      axios.all([getNew(), getWomens(), getMens(), getAccessories()])
+        .then(axios.spread((recent, womens, mens, accessories) => {
+
+          console.log(recent.data.records, womens.data.records, mens.data.records, accessories.data.records,)
+
+          recent = parseResponse(recent);
+          womens = parseResponse(womens);
+          mens = parseResponse(mens);
+          accessories = parseResponse(accessories);
+
+          res.render('pages/home', { recent, womens, mens, accessories });
+        }));
     });
 
 module.exports = router;

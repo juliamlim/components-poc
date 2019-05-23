@@ -5,6 +5,38 @@
   letter-spacing: 1px;
 }
 
+.wrap {
+  width: 85%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+section {
+  margin: 25px 0;
+}
+
+.hero {
+  height: 50vh;
+  display: grid;
+  grid-template-columns: 62% 38%;
+  grid-template-areas: 10% auto;
+  grid-template-areas: "a b" "a c";
+  grid-gap: 10px;
+  overflow: hidden;
+}
+
+.hero image-wrap:first-child {
+  grid-area: a;
+}
+
+.trending {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+/*
+
+
 body {
   background-color: #eee;
 }
@@ -36,4 +68,4 @@ body {
   min-width: 200px;
   align-self: stretch;
   margin: 15px 7.5px;
-}
+} */

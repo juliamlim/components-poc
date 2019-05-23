@@ -1,0 +1,8 @@
+.image-wrap {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; }
+  .image-wrap.portrait img {
+    height: 100%; }
+  .image-wrap.landscape img {
+    width: 100%; }
