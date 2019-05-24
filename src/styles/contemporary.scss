@@ -1,3 +1,7 @@
+@import './partials/image-wrap';
+
+@import './partials/product-tile';
+
 .product-tile {
   padding: var(--product-tile-padding, 8px);
   background-color: #fafafa;

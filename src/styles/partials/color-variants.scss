@@ -1,0 +1,21 @@
+.color-variants {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.color-swatch {
+  width: var(--color-variant-height, 20px);
+  height: var(--color-variant-height, 20px);
+  display: inline-block;
+  border: .5px solid #eee;
+  border-radius: var(--variant-border-radius, 3px);
+
+  &.see-more {
+    position: relative;
+    top: -7px;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: var(--color-variant-height, 20px);
+  }
+}

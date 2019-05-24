@@ -25,17 +25,17 @@ router.route('/')
       }
 
       function parseResponse(response) {
-        const { records = [] } = response.data;
+        let { records = [] } = response.data;
 
         return records.map( item => {
-          const { ProdDetail_Image, nonvisualVariant } = item.allMeta.visualVariant[0];
+          let { ProdDetail_Image, nonvisualVariant } = item.allMeta.visualVariant[0];
 
-          const colors = item.allMeta.visualVariant.map(v => {
-            const { Color_Name, Hex_Code } = v;
+          let colors = item.allMeta.visualVariant.map(v => {
+            let { Color_Name, Hex_Code } = v;
             return { name: Color_Name, hex: `#${Hex_Code}`, product: `https://${env.customer.origin}${v.ProdDetail_Image}` };
           });
 
-          return product = {
+          return {
             name: item.allMeta.title,
             image: `https://${env.customer.origin}${ProdDetail_Image}`,
             price: nonvisualVariant[0].gbi_price_display || 'FREE',
@@ -47,12 +47,10 @@ router.route('/')
       axios.all([getNew(), getWomens(), getMens(), getAccessories()])
         .then(axios.spread((recent, womens, mens, accessories) => {
 
-          console.log(recent.data.records, womens.data.records, mens.data.records, accessories.data.records,)
-
           recent = parseResponse(recent);
-          womens = parseResponse(womens);
-          mens = parseResponse(mens);
-          accessories = parseResponse(accessories);
+          womens = parseResponse(womens)[0];
+          mens = parseResponse(mens)[0];
+          accessories = parseResponse(accessories)[0];
 
           res.render('pages/home', { recent, womens, mens, accessories });
         }));

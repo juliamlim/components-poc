@@ -1,0 +1,33 @@
+.product-tile {
+  height: var(--product-tile-height, 100%);
+  padding: var(--product-tile-padding, 10px);
+  background: var(--product-tile-background, white);
+  box-sizing: border-box;
+  position: relative;
+
+  .product-img {
+    width: 100%;
+    height: var(--product-img-height, 200px);
+    background-color: var(--product-img-background, white);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+
+    img {
+      height: fit-content;
+    }
+
+  }
+
+  /** Need a more solid way to do this */
+  .product-prices,
+  .product-prices ~ .product-cta {
+    margin-bottom: calc(var(--product-tile-padding, 10px) + var(--button-height, 33px));
+  }
+
+  .product-cta {
+    width: calc(100% - var(--product-tile-padding, 10px) * 2);
+    position: absolute;
+    bottom: var(--theme-spacing, 10px);
+  }
+}

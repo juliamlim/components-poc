@@ -1,27 +1,52 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:300&display=swap');
 
+:root {
+  --grid-gap: 15px;
+  --primary-color: #F4A121;
+  --grey-color: #F0F3F5;
+  --variant-border-radius: 50%;
+}
+
 * {
   font-family: 'Muli', Helvetica, Arial, sans-serif;
   letter-spacing: 1px;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
 }
 
 .wrap {
   width: 85%;
   max-width: 980px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.row {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--grey-color);
 }
 
 section {
-  margin: 25px 0;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.hero,
+.trending,
+.category {
+  display: grid;
+  grid-gap: 10px;
 }
 
 .hero {
   height: 50vh;
-  display: grid;
   grid-template-columns: 62% 38%;
-  grid-template-areas: 10% auto;
+  grid-template-rows: 1fr 1fr;
   grid-template-areas: "a b" "a c";
-  grid-gap: 10px;
   overflow: hidden;
 }
 
@@ -30,42 +55,22 @@ section {
 }
 
 .trending {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: auto repeat(3, 25%);
 }
 
-/*
-
-
-body {
-  background-color: #eee;
+.trending product-tile {
+  align-self: stretch;
 }
 
-#featured {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "title title" "a b";
-  grid-gap: 15px;
+.category {
+  grid-template-areas: "a a a" "b c d";
 }
 
-#other {
-  width: 100%;
+.category h2 {
+  grid-area: a;
 }
 
-#other h2,
-#featured h2 {
-  grid-area: title;
+.category product-tile {
+  --product-tile-background: var(--grey-color);
   text-align: center;
 }
-
-#other .shelf {
-  display: flex;
-  max-width: 100%;
-  overflow-y: scroll;
-}
-
-#other .shelf > product-tile {
-  min-width: 200px;
-  align-self: stretch;
-  margin: 15px 7.5px;
-} */

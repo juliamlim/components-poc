@@ -1,0 +1,6 @@
+.primary-button {
+  padding: var(--theme-spacing, 8px) var(--theme-spacing, 15px);
+  color: var(--button-text, white);
+  background-color: var(--primary-color, #218df1);
+  border: var(--button-border, none);
+}

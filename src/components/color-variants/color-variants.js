@@ -1,8 +1,8 @@
 import { Base } from '../base';
 
-import './product-tile-color-swatch';
+import './color-swatch';
 
-class ProductTileColorVariants extends Base {
+class ColorVariants extends Base {
   static get observedAttributes() {
     return ['colors', 'display'];
   }
@@ -15,19 +15,17 @@ class ProductTileColorVariants extends Base {
     const { colors = [], toggle } = this.state;
 
     return `
-      <ul class="product-tile-color-variants">
+      <ul class="color-variants">
         ${ this.colorSwatches(colors) }
         ${
-          this.state.colors.length > 5 ?
-              `<li style="cursor: pointer" class="product-tile-color-swatch see ${toggle ? 'more' : 'less' }">${toggle ? '+' : '-' }</li>`
+          this.state.more ?
+            `<slot name="more">
+              <li class="color-swatch see-more">+${this.state.more}</li>
+            </slot>`
           : ''
         }
       </ul>
     `;
-  }
-
-  connectedCallback() {
-    // this.element.querySelector('.see').addEventListener('click', () => this.state.toggle = !this.state.toggle);
   }
 
   attributeChangedCallback(attribute, oldValue, newValue) {
@@ -36,10 +34,14 @@ class ProductTileColorVariants extends Base {
   }
 
   parseState(state = {}) {
+    const colors = typeof state.colors === 'string' ? JSON.parse(state.colors) : state.colors || [];
+    const display = state.display || 5;
+
     return {
       toggle: true,
-      display: state.display || 5,
-      colors: typeof state.colors === 'string' ? JSON.parse(state.colors) : state.colors || []
+      more: colors.length > display ? colors.length - display : false,
+      colors,
+      display
     };
   }
 
@@ -50,11 +52,11 @@ class ProductTileColorVariants extends Base {
 
     for (let i = 0; i < display; i++) {
       const color = colors[i];
-      swatches.push(`<product-tile-color-swatch product="${color.product}" name="${color.name}" hex="${color.hex}"></product-tile-color-swatch>`);
+      swatches.push(`<color-swatch sku="${color.sku}" product="${color.product}" name="${color.name}" hex="${color.hex}"></color-swatch>`);
     }
 
     return swatches.join('');
   }
 }
 
-export default customElements.define('product-tile-color-variants', ProductTileColorVariants);
+export default customElements.define('color-variants', ColorVariants);

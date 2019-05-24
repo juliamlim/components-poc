@@ -1,10 +1,11 @@
 import { Base } from '../base';
 
-import './product-tile-color-variants';
+import '../color-variants';
+
 
 class ProductTile extends Base {
   static get observedAttributes() {
-    return ['name', 'price', 'image', 'variants', 'sale-price'];
+    return ['name', 'price', 'image', 'variants', 'sale-price', 'buttons'];
   }
 
   init(attributes) {
@@ -15,23 +16,46 @@ class ProductTile extends Base {
     return `
       <article class="product-tile">
         <div class="product-img"><img src="${this.state.image || 'img/product.svg'}"/></div>
-        ${ this.state.colors ? `<product-tile-color-variants colors='${this.state.colors}'></product-tile-color-variants>` : '' }
-        <header class="product-name"><h5>${this.state.name}</h5></header>
-        <p>
-          <span class="product-price ${this.state.salePrice ? 'sale' : '' }">${this.state.price}</span>
-          ${ this.state.salePrice ? `<span class="product-price-sale">${this.state.salePrice}</span>` : '' }
-        </p>
-        <!-- Need to define children in the constructor so we can create an event listener for below -->
-        <slot name="buttons">
-          <button class="product-atc">Add to Basket</button>
+        <slot name="variants">
+          ${ this.state.colors ? `<color-variants colors='${this.state.colors}'></color-variants>` : '' }
         </slot>
+        <header class="product-name">
+          <slot name="title">
+            ${
+              this.state.name ?
+                `<h5>${this.state.name}</h5>`
+              : ''
+            }
+          </slot>
+        </header>
+        <slot name="price">
+          ${
+            this.state.price ?
+              `<p class="product-prices">
+                <span class="product-price ${this.state.salePrice ? 'sale' : '' }">${this.state.price}</span>
+                ${ this.state.salePrice ? `<span class="product-price-sale">${this.state.salePrice}</span>` : '' }
+              </p>`
+            : ''
+          }
+        </slot>
+        ${
+          this.state.buttons ?
+            `<slot name="buttons">
+              <button class="product-cta add-to-basket primary-button">Add to Basket</button>
+            </slot>`
+          : ''
+        }
       </article>
     `;
   }
 
   connectedCallback() {
     this.addToCart = this.addToCart.bind(this);
-    this.element.querySelector('.product-atc').addEventListener('click', this.addToCart);
+    const atb = this.element.querySelector('.add-to-basket') || null;
+
+    if (atb) {
+      atb.addEventListener('click', this.addToCart);
+    }
 
     this.addEventListener('change_product_image', e => {
       this.element.querySelector('.product-img img').setAttribute('src', e.detail.image());
@@ -56,9 +80,10 @@ class ProductTile extends Base {
   parseState(state) {
     return {
       ...state,
-      name: (state.name || 'Coal').toUpperCase(),
-      price: state.price ? state.price : 'FREE',
+      name: (state.name || '').toUpperCase(),
+      price: state.price,
       salePrice: state.salePrice ? state.salePrice : '',
+      buttons: state.buttons !== 'false',
     };
   }
 

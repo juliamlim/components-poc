@@ -1,3 +1,3 @@
 // Components
-export * from './image';
+export * from './image-wrap';
 export * from './product-tile';

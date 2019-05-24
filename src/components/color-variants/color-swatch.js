@@ -1,6 +1,6 @@
 import { Base } from '../base';
 
-class ProductTileColorSwatch extends Base {
+class ColorSwatch extends Base {
   static get observedAttributes() {
     return ['hex', 'name'];
   }
@@ -11,7 +11,7 @@ class ProductTileColorSwatch extends Base {
 
   render() {
     return `
-      <li title="${this.state.name}" class="product-tile-color-swatch" style="background-color: ${this.state.hex};"></li>
+      <li class="color-swatch" title="${this.state.name}" style="background-color: ${this.state.hex};"></li>
     `;
   }
 
@@ -20,11 +20,11 @@ class ProductTileColorSwatch extends Base {
       this.dispatchEvent(new CustomEvent('change_product_image', {
         bubbles: true,
         composed: true,
-        detail: { image: () => this.state.product }
+        detail: { image: () => this.state.product, sku: () => this.state.sku, color: () => this.state.name }
       }));
     });
   }
 
 }
 
-export default customElements.define('product-tile-color-swatch', ProductTileColorSwatch);
+export default customElements.define('color-swatch', ColorSwatch);

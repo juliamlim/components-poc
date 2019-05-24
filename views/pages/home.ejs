@@ -5,33 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Web Components POC</title>
-  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/minimal.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <header class="wrap">
     <img src="https://www.alphabroder.com/images/companylogos.png" alt="Alphabroder Logo">
   </header>
-  <main class="wrap">
-    <section class="hero">
+  <main>
+    <section class="hero wrap">
       <image-wrap type="landscape" src="https://www.alphabroder.com/images/T4slide1.jpg" alt="Fashion feed"></image-wrap>
       <image-wrap type="landscape" src="https://www.alphabroder.com/images/T4slide2.jpg" alt="Bella + Canvas"></image-wrap>
       <image-wrap type="landscape" src="https://www.alphabroder.com/images/T4slide6.jpg" alt="Choice advantage"></image-wrap>
     </section>
-    <section class="trending">
-      <div>
-        <h2>Trending Now</h2>
-        <p>Hottest selling styles for your custom merchandise.</p>
-      </div>
-      <% accessories.forEach(item => { %>
-        <product-tile
-          name="<%- product.name %>"
-          price="<%- product.price %>"
-          image="<%- product.image %>"
-          <% if (product.salePrice) { %> sale-price="<%- product.salePrice %>" <% } %>
-          <% if (product.colors) { %> colors='<%- JSON.stringify(product.colors) %>' <% } %>
-        ></product-tile>
-      <% }) %>
+    <div class="row">
+      <section class="trending wrap">
+        <div>
+          <h2>Trending Now</h2>
+          <p>Hottest selling styles for your custom merchandise.</p>
+        </div>
+        <% recent.forEach(product => { %>
+          <product-tile
+            name="<%- product.name %>"
+            price="<%- product.price %>"
+            image="<%- product.image %>"
+            colors='<%- JSON.stringify(product.colors) %>'
+          ></product-tile>
+        <% }) %>
+      </section>
+    </div>
+    <section class="category wrap">
+      <h2>Shop by category</h2>
+      <product-tile image="<%- womens.image %>" buttons="false"><h3 slot="title">Womens</h3></product-tile>
+      <product-tile image="<%- mens.image %>" buttons="false"><h3 slot="title">Mens</h3></product-tile>
+      <product-tile image="<%- accessories.image %>" buttons="false"><h3 slot="title">Accessories</h3></product-tile>
     </section>
   </main>
   <script src="components.js" type="text/javascript"></script>
